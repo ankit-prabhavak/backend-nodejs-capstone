@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const pinoLogger = require('./logger')
+const path = require('path')
 
 const connectToDatabase = require('./models/db')
 // require('./util/import-mongo')
@@ -17,6 +18,11 @@ connectToDatabase().then(() => {
 }).catch((e) => console.error('Failed to connect to DB', e))
 
 app.use(express.json())
+
+app.use(
+  '/images',
+  express.static(path.join(__dirname, 'public', 'images'))
+)
 
 // Route files
 // authRoutes — Module 3 (placeholder)
