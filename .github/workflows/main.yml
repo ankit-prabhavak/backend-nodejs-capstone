@@ -1,0 +1,35 @@
+name: CI - Lint JavaScript
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint_js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install backend dependencies
+        working-directory: secondChance-backend
+        run: npm ci
+
+      - name: Lint backend JS files
+        working-directory: secondChance-backend
+        run: npx eslint . --ext .js
+
+      - name: Install sentiment dependencies
+        working-directory: sentiment
+        run: npm ci
+
+      - name: Lint sentiment JS files
+        working-directory: sentiment
+        run: npx eslint . --ext .js
