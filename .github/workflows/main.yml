@@ -27,7 +27,7 @@ jobs:
 
       - name: Lint backend JS files
         working-directory: secondChance-backend
-        run: npx eslint@8 . --ext .js
+        run: npx eslint . --ext .js
 
       - name: Install sentiment dependencies
         working-directory: sentiment
@@ -35,4 +35,4 @@ jobs:
 
       - name: Lint sentiment JS files
         working-directory: sentiment
-        run: npx eslint@8 . --ext .js
+        run: npx eslint . --ext .js
