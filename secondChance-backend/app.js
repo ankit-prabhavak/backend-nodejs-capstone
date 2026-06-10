@@ -20,7 +20,7 @@ app.use(express.json());
 
 // Route files
 // authRoutes — Module 3 (placeholder)
-// const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // Items API Task 1: import secondChanceItemsRoutes
 const secondChanceItemsRoutes = require('./routes/secondChanceItemsRoutes');
@@ -35,7 +35,7 @@ app.use(pinoHttp({ logger }));
 
 // Use Routes
 // authRoutes — Module 3 (placeholder)
-// app.use('/api/secondchance/auth', authRoutes);
+app.use('/api/secondchance/auth', authRoutes);
 
 // Items API Task 2: wire secondChanceItemsRoutes
 app.use('/api/secondchance/items', secondChanceItemsRoutes);
