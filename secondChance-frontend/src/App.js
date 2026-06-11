@@ -10,27 +10,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
+import Footer from './components/Footer/Footer';
 import { AppProvider } from './context/AppContext';
 
 function App() {
-
   return (
-      <AppProvider>
-        <Navbar/>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/app" element={<MainPage />} />
-          <Route path='/app/profile' element={<Profile/>}/>
-          <Route path="/app/item/:itemId" element={<DetailsPage/>} />
-          <Route path="/app/search" element={<SearchPage/>} />
-          <Route path="/app/login" element={<LoginPage/>} />
-          <Route path="/app/register" element={<RegisterPage />} />
-          <Route path="/app/addItem" element={<ItemPage />} />
-        </Routes>
-        </AppProvider>
+    <AppProvider>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navbar />
+        <main style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/app" element={<MainPage />} />
+            <Route path='/app/profile' element={<Profile />} />
+            <Route path="/app/item/:itemId" element={<DetailsPage />} />
+            <Route path="/app/search" element={<SearchPage />} />
+            <Route path="/app/login" element={<LoginPage />} />
+            <Route path="/app/register" element={<RegisterPage />} />
+            <Route path="/app/addItem" element={<ItemPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </AppProvider>
   );
-
-
 }
 
 export default App;

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {urlConfig} from '../../config';
+import { urlConfig } from '../../config';
 import { useAppContext } from '../../context/AppContext';
-
-import './RegisterPage.css';
 
 function RegisterPage() {
     const [firstName, setFirstName] = useState('');
@@ -15,26 +13,12 @@ function RegisterPage() {
     const { setIsLoggedIn } = useAppContext();
 
     const handleRegister = async () => {
-        //api call
         const response = await fetch(`${urlConfig.backendUrl}/api/secondchance/auth/register`, {
             method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password
-            })
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ firstName, lastName, email, password })
         });
-
         const json = await response.json();
-        console.log('json data', json);
-        console.log('er', json.error);
-
-        // console.log('ers',json.errors);
-
         if (json.authtoken) {
             sessionStorage.setItem('auth-token', json.authtoken);
             sessionStorage.setItem('name', firstName);
@@ -42,77 +26,39 @@ function RegisterPage() {
             navigate('/app');
             setIsLoggedIn(true);
         }
-        if (json.error) {
-            setShowerr(json.error);
-        }
-    }
+        if (json.error) setShowerr(json.error);
+    };
 
     return (
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-md-6 col-lg-4">
-                    <div className="register-card p-4 border rounded">
-                        <h2 className="text-center mb-4 font-weight-bold">Register</h2>
-                        <div className="mb-3">
-                            <label htmlFor="firstName" className="form-label">FirstName</label>
-                            <input
-                                id="firstName"
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter your firstName"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                        </div>
-
-                        {/* last name */}
-
-                        <div className="mb-3">
-                            <label htmlFor="lastName" className="form-label">LastName</label>
-                            <input
-                                id="lastName"
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter your lastName"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </div>
-
-                        {/* email  */}
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email</label>
-                            <input
-                                id="email"
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            {showerr && (
-                                <div className="text-danger">{showerr}</div>
-                            )}
-                        </div>
-
-                        <div className="mb-4">
-                            <label htmlFor="password" className="form-label">Password</label>
-                            <input
-                                id="password"
-                                type="password"
-                                className="form-control"
-                                placeholder="Enter your password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <button className="btn btn-primary w-100 mb-3" onClick={handleRegister}>Register</button>
-                        <p className="mt-4 text-center">
-                            Already a member? <a href="/app/login" className="text-primary">Login</a>
-                        </p>
-                    </div>
+        <div className="container" style={{ maxWidth: '420px', marginTop: '5rem', marginBottom: '5rem' }}>
+            <div style={{ marginBottom: '2rem' }}>
+                <h1 style={{ fontSize: '1.6rem', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.3rem' }}>Create account</h1>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Join SecondChance today</p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div>
+                    <label htmlFor="firstName" className="form-label">First name</label>
+                    <input id="firstName" type="text" className="form-control" placeholder="First" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor="lastName" className="form-label">Last name</label>
+                    <input id="lastName" type="text" className="form-control" placeholder="Last" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </div>
             </div>
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">Email</label>
+                <input id="email" type="text" className="form-control" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                {showerr && <span style={{ color: '#dc2626', fontSize: '0.78rem', display: 'block', marginTop: '0.35rem' }}>{showerr}</span>}
+            </div>
+            <div className="mb-4">
+                <label htmlFor="password" className="form-label">Password</label>
+                <input id="password" type="password" className="form-control" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <button className="btn btn-primary w-100" onClick={handleRegister}>Create account</button>
+            <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                Already a member?{' '}
+                <a href="/app/login" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>Sign in</a>
+            </p>
         </div>
     );
 }
